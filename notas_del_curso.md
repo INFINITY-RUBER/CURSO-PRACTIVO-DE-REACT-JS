@@ -292,3 +292,80 @@ Instalación de ESLint:
 https://gist.githubusercontent.com/gndx/60ae8b1807263e3a55f790ed17c4c57a/raw/0de495fc84df71ce97ef87c37505362f3512e1c3/eslintrc
 
 - luego agregamos el '.gitingnore': https://gist.github.com/gndx/747a8913d12e96ff8374e2125efde544
+
+## Añadiendo imágenes con Webpack  
+Vamos a usar File Loader para acceder a las imágenes de nuestro proyecto desde el código.
+Inicialmente, estos archivos estáticos se encuentran junto al código de desarrollo. Pero al momento de compilar, Webpack guardará las imágenes en una nueva carpeta junto al código para producción y actualizará nuestros componentes (o donde sea que usemos las imágenes) con los nuevos nombres y rutas de los archivos.
+Instalación de File Loader: `npm install --save-dev file-loader`
+Configuración de File Loader en Webpack (webpack.config.js):
+rules:
+```javascript
+ [ 
+  {
+    test: /\.(png|gif|jpg)$/,
+    use: [
+      {
+        loader: 'file-loader',
+        options: { name: 'assets/[hash].[ext]' },
+      }
+    ],
+  },
+],
+```
+Uso de File Loader con React:
+```javascript
+import React from 'react';
+import nombreDeLaImagen from '../assets/static/nombre-del-archivo';
+
+const Component = () => (
+  <img src={nombreDeLaImagen} />
+);
+
+export default Component;
+```
+### Imports, Variables y Fuentes de Google en Sass
+Así como JavaScript, Sass nos permite almacenar valores en variables que podemos usar en cualquier otra parte de nuestras hojas de estilo.
+```javascript
+$theme-font: 'Muli, sans-serif;
+$main-color: #8f57fd;
+
+body {
+  background: $main-color;
+  font-family: $theme-font;
+}
+```
+Podemos guardar nuestras variables en un archivo especial e importarlo desde los archivos de estilo donde queremos usar estas variables.
+
+# Vars.scss
+$theme-font: 'Muli, sans-serif;
+$main-color: #8f57fd;
+
+# App.scss
+```javascript
+@import ""./Vars.scss""
+
+body {
+  background: $main-color;
+  font-family: $theme-font;
+}
+```
+También podemos importar hojas de estilo externas a nuestra aplicación. Por ejemplo: las fuentes de Google.
+
+`@import url(https://fonts.googleapis.com/css?family=Muli&display-swa`p)
+
+Recuerda que puedes tomar el Curso de Sass para estudiar esta herramienta a profundidad.
+
+ 
+### Creando una Fake API
+https://gist.github.com/gndx/d4ca4739450afaa614efe4570ac362ee
+Vamos a usar JSON Server para crear una Fake API: una API ““falsa”” construida a partir de un archivo JSON que nos permite preparar nuestro código para consumir una API de verdad en el futuro.
+
+Instalación de JSON Server:
+`sudo npm install json-server -g`
+
+Recuerda que en Windows debes correr tu terminal de comandos en modo administrador.
+Ejecutar el servidor de JSON Server:
+`json-server archivoParaTuAPI.json`
+## React Hooks: useEffect y useState
+En esta clase el profesor Oscar Barajas nos enseña qué es y cómo implementar React Hooks: una característica de React disponible a partir de la versión 16.8 que nos permite agregar estado y ciclo de vida a nuestros componentes creados como funciones.
+React es una librería desarrollada por Facebook que nos ayuda a construir interfaces de usuario interactivas para todo tipo de aplicaciones: páginas web, aplicaciones móviles o de escritorio, experiencias de realidad virtual, entre otr
